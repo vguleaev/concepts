@@ -1,3 +1,38 @@
 # Reverse Proxy
 
-TBD
+### What is a Reverse Proxy?
+
+A **reverse proxy** is a server that sits between client devices and a backend server, forwarding client requests to 
+the backend server and returning the server's responses to the clients. Unlike a forward proxy, which serves client requests to the internet, a reverse proxy 
+handles requests from the internet to the server.
+
+
+### When to use?
+
+Use Reverse Proxy to improve **security**, **load balancing**, **SSL termination**, **authentication** and **caching**.
+
+### How does it work?
+
+When the client like Browser or Mobile app sends a request, it gets routed through the internet and hits the reverse proxy server. 
+The reverse proxy server then examines the request and figures out which application server should get the request and forwards it to the respective server.
+
+![Image](/images/load-balancer-d.png)
+
+### Key features
+
+- **Load Balancing**: Distributes incoming traffic across multiple backend servers to ensure no single server is overwhelmed, improving performance and reliability.
+- **Security**: Acts as a barrier between clients and backend servers, helping to protect against attacks and hide the backend server's identity.
+- **Caching**: Stores copies of frequently requested content to reduce the load on backend servers and speed up response times.
+- **SSL Termination**: Offloads the SSL encryption/decryption process from backend servers, reducing their workload and simplifying certificate management.
+
+### Common Use Cases
+
+- **Web Acceleration**: Speeds up the delivery of web content by caching static content and compressing data.
+- **Global Server Load Balancing (GSLB)**: Distributes traffic across servers located in different geographical regions to improve availability and performance.
+- **Application Firewall**: Provides an additional layer of security by filtering and monitoring incoming traffic to protect against malicious activities.
+
+### Popular Reverse Proxy Servers
+
+- [Nginx](https://nginx.org/): A high-performance, open-source web server and reverse proxy server known for its speed, scalability, and flexibility.
+- [Apache HTTP Server](https://httpd.apache.org/): A widely used open-source web server that can also function as a reverse proxy server.
+- [HAProxy](https://www.haproxy.org/): A free, open-source software that provides high availability, load balancing, and proxying for TCP and HTTP-based applications.
