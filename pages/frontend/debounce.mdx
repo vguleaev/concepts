@@ -1,3 +1,44 @@
 # Debounce 
 
-TBD
+### What is Debouncing?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Debouncing** is a technique to limit the rate at which a function is executed, ensuring it is only called after a certain period of inactivity.
+
+### When to use?
+
+Use debouncing to prevent a function from being called too frequently, such as in response to rapid user input like scrolling, resizing, or typing.
+
+### How does it work? 
+
+When the debounced function is called, it sets a timer to delay its execution. If the function is called again
+before the timer expires, the timer is reset. This process continues until the function is no longer called, 
+at which point the function is executed.
+
+```javascript copy
+function debounce(fn, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
+}
+
+// Usage
+const handleResize = debounce(() => {
+  console.log('Window resized');
+}, 300);
+
+window.addEventListener('resize', handleResize);
+```
+
+In this example `handleResize` is a debounced function that logs "Window resized" after the user has stopped resizing the window for 300ms.
+
+
+### Debouncing vs Throttling
+
+Debouncing and throttling are similar techniques to limit the rate at which a function is executed, but they differ in how they achieve this.
+
+- **Debouncing** ensures a function is only called after a certain period of inactivity. If the function is called again before the timer expires, the timer is reset.
+- **Throttling** ensures a function is called at most once every X milliseconds. If the function is called more frequently, the calls are ignored until the next interval.
