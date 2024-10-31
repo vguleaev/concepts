@@ -1,8 +1,8 @@
 # Concepts for SWE
 
-Welcome to **Concepts for Software Engineers** from [Vladislav Guleaev](https://github.com/vguleaev)!
+Welcome to **Concepts for Software Engineers** from Vladislav Guleaev!
 
-This is a collection of tech **concepts**, **philisopsies** and **patterns** in software development explained in my own words.
+This is a collection of tech concepts, philisopsies and patterns in software development explained in my own words.
 
 https://concepts.vguleaev.dev/
 
