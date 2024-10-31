@@ -1,23 +1,18 @@
-# Nextra Docs Template 
+# Concepts for SWE
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
+Welcome to **Concepts for Software Engineers** from [Vladislav Guleaev](https://github.com/vguleaev)!
 
-[**Live Demo →**](https://nextra-docs-template.vercel.app)
+This is a collection of tech **concepts**, **philisopsies** and **patterns** in software development explained in my own words.
 
-[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
+https://concepts.vguleaev.dev/
 
-## Quick Start
+## Tech Stack
 
-Click the button to clone this repository and deploy it on Vercel:
+- [Nextra](https://nextra.site)
+- [Vercel](https://vercel.com/)
 
-[![](https://vercel.com/button)](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fshuding%2Fnextra-docs-template&showOptionalTeamCreation=false)
-
-## Local Development
-
-First, run `pnpm i` to install the dependencies.
-
-Then, run `pnpm dev` to start the development server and visit localhost:3000.
+Give a ⭐️ if you like the project!
 
 ## License
 
-This project is licensed under the MIT License.
+This project is [MIT](https://github.com/vguleaev/concepts/blob/main/LICENSE) licensed.
