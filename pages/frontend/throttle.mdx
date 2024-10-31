@@ -1,6 +1,6 @@
 # Throttle
 
-### What is Debouncing?
+### What is Throttling?
 
 > This concept will be discussed in the context of Frontend development.
 
@@ -16,8 +16,7 @@ limiting the rate of user input.
 When the throttled function is called, it checks the time since the last call. If the time is greater than the specified limit, 
 the function is executed.
 
-
-```javascript
+```javascript copy
 function throttle(fn, limit) {
   let lastCall = 0;
   return function (...args) {
