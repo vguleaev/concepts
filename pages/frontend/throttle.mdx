@@ -1,3 +1,47 @@
 # Throttle
 
-TBD
+### What is Debouncing?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Throttling** is a technique to limit the rate at which a function is executed, ensuring it is only called at most once in a specified period of time.
+
+### When to use?
+
+Use throttling to prevent a function from being called too frequently, such as reducing amount of requests sent to a server or 
+limiting the rate of user input.
+
+### How does it work? 
+
+When the throttled function is called, it checks the time since the last call. If the time is greater than the specified limit, 
+the function is executed.
+
+
+```javascript
+function throttle(fn, limit) {
+  let lastCall = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastCall >= limit) {
+      lastCall = now;
+      fn(...args);
+    }
+  };
+}
+
+// Usage
+const handleScroll = throttle(() => {
+  console.log('Window scrolled');
+}, 300);
+
+window.addEventListener('scroll', handleScroll);
+```
+
+In this example `handleScroll` is a throttled function that logs "Window scrolled" at most once every 300ms.
+
+### Debouncing vs Throttling
+
+Debouncing and throttling are similar techniques to limit the rate at which a function is executed, but they differ in how they achieve this.
+
+- **Debouncing** ensures a function is only called after a certain period of inactivity. If the function is called again before the timer expires, the timer is reset.
+- **Throttling** ensures a function is called at most once every X milliseconds. If the function is called more frequently, the calls are ignored until the next interval.
