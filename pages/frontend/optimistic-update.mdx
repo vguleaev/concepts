@@ -1,3 +1,45 @@
 # Optimistic Update
 
-TBD
+### What are Optimistic Updates?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Optimistic update** is a technique used to improve the user experience by immediately updating the UI to reflect a change, assuming that 
+the operation will succeed. This approach provides a more responsive and smooth user experience.
+
+### When to use?
+
+Use optimistic updates when you want to provide immediate feedback to the user, such as updating a list of items after adding or 
+removing an item, or marking an item as favorite. This technique is particularly useful in scenarios where the backend operation is 
+expected to succeed most of the time.
+
+### How does it work?
+
+When an optimistic update is performed, the UI is updated immediately, and a request is sent to the server to perform the actual operation. 
+If the server responds with success, no further action is needed. If the server responds with an error, the UI is reverted to its previous 
+state to reflect the failure.
+
+```javascript copy
+async function updateItemOptimistically(item) {
+  // Update the UI immediately
+  updateUI(item);
+
+  // Send the request to the server
+  const response = await fetch('/api/items', {
+    method: 'PUT',
+    body: JSON.stringify(item),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    // Revert the UI if the request fails
+    revertUI(item);
+  }
+}
+
+// Usage
+const item = { id: 1, name: 'Updated Item' };
+updateItemOptimistically(item);
+```
