@@ -1,3 +1,120 @@
 # Infinite Scroll
 
-TBD
+### What is Infinite Scroll?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Infinite scroll** is a technique to load content continuously as the user scrolls down the page, eliminating the need for pagination. 
+This approach provides a seamless user experience by dynamically loading more content as needed.
+
+### When to use?
+
+Use infinite scroll to enhance user experience in applications with large datasets, such as social media feeds, e-commerce product listings, 
+or any content-heavy application where users are likely to browse through a lot of items.
+
+### How does it work?
+
+Infinite scroll can be implemented using various methods, including the `IntersectionObserver` API and virtualized lists with libraries 
+like `React Window` or `React Virtualized`.
+
+### Using IntersectionObserver API
+
+The `IntersectionObserver` API can be used to detect when an element (e.g. a loading indicator) comes into view, 
+triggering the loading of more content.
+
+```javascript copy
+import React, { useEffect, useRef, useState } from 'react';
+
+function InfiniteScrollList() {
+  const [items, setItems] = useState(Array.from({ length: 20 }));
+  const loader = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreItems();
+      }
+    }, { threshold: 1.0 });
+
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+
+    return () => {
+      if (loader.current) {
+        observer.unobserve(loader.current);
+      }
+    };
+  }, []);
+
+  const loadMoreItems = () => {
+    setTimeout(() => {
+      setItems((prev) => [...prev, ...Array.from({ length: 20 })]);
+    }, 1500);
+  };
+
+  return (
+    <div>
+      {items.map((_, index) => (
+        <div key={index} className="item">Item {index + 1}</div>
+      ))}
+      <div ref={loader} className="loading">🌀 Loading...</div>
+    </div>
+  );
+}
+
+export default InfiniteScrollList;
+```
+
+In this example, the IntersectionObserver API is used to detect when the loading indicator comes into view, triggering the loadMoreItems 
+function to load more content.
+
+### Using Virtualized Lists
+
+**Virtualized lists** work by rendering only a small subset of the total items at any given time. 
+
+As the user scrolls, the list dynamically updates to **render new items** that come into view and **remove items** that go out of view. 
+
+Virtualized lists can be used to efficiently render large lists by only rendering the visible items. Libraries like `React Window` or `React Virtualized` 
+provide components to implement virtualized lists.
+
+```javascript copy
+import React from 'react';
+import { FixedSizeList as List } from 'react-window';
+
+const items = Array.from({ length: 1000 });
+
+function Row({ index, style }) {
+  return (
+    <div style={style} className="item">
+      Item {index + 1}
+    </div>
+  );
+}
+
+function VirtualizedList() {
+  return (
+    <List
+      height={400}
+      itemCount={items.length}
+      itemSize={35}
+      width={300}
+    >
+      {Row}
+    </List>
+  );
+}
+
+export default VirtualizedList;
+```
+
+In this example, `React Window` is used to create a virtualized list that efficiently renders only the visible items, improving performance for large datasets.
+
+### Infinite Scroll vs Pagination
+
+Infinite scroll and pagination are two different approaches to loading content.
+
+- **Infinite Scroll**: Continuously loads content as the user scrolls down the page, providing a seamless browsing experience. 
+  It is ideal for applications where users are likely to browse through a lot of items.
+- **Pagination**: Divides content into discrete pages, allowing users to navigate through pages. 
+  It is suitable for applications where users need to have control over the content they view.
