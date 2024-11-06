@@ -1,0 +1,43 @@
+# Lazy Loading
+
+### What is Lazy Loading?
+
+> This concept will be discussed in the context of Frontend development using React.
+
+**Lazy loading** is a technique to defer the loading of non-critical resources at the initial page load time. 
+Instead, these resources are loaded only when they are needed, such as when a user navigates to a specific route or component.
+
+### When to use?
+
+Use lazy loading to improve the initial load time of a web application by deferring the loading of components, routes, or other heavy resources 
+until they are actually needed. This technique is particularly useful for large applications with many routes or components.
+
+### How does it work?
+
+In React, lazy loading can be achieved using code splitting and the `React.lazy` function along with `Suspense`. 
+Code splitting allows you to split your code into smaller chunks, which can be loaded on demand. 
+Skeletons can be used to provide a placeholder UI while the actual component is being loaded.
+
+#### Code Splitting and Lazy Import
+
+Code splitting can be done at the component level using `React.lazy` and `Suspense`.
+
+```javascript copy
+import React, { Suspense } from 'react';
+
+// Lazy load the component
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+
+function App() {
+  return (
+    <div>
+      <h1>My App</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}
+
+export default App;
+```
