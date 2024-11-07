@@ -1,0 +1,81 @@
+# Http Polling
+
+### What is HTTP Polling?
+
+> This concept will be discussed in the context of Frontend development.
+
+**HTTP Polling** is a technique where a client repeatedly requests data from a server at regular intervals. 
+This approach is used to keep the client updated with the latest data from the server.
+
+### When to use?
+
+Use HTTP polling when you need to keep the client updated with real-time data, such as live sports scores, stock prices, or chat messages, 
+and other real-time updates where WebSockets or Server-Sent Events are not applicable.
+
+### How does it work?
+
+HTTP polling works by sending periodic HTTP requests to the server to check for new data. If new data is available, 
+the server responds with the updated data, otherwise it may respond with an empty response or a status indicating no new data.
+
+```javascript copy
+async function fetchData(url, callback) {
+  const response = await fetch(url);
+  if (response.ok) {
+    const data = await response.json();
+    callback(data);
+  }
+}
+
+function poll(url, interval, callback) {
+  setInterval(() => fetchData(url, callback), interval);
+}
+
+// Usage
+poll('/api/data', 5000, (data) => {
+  console.log('Received data:', data);
+});
+```
+
+In this example, the poll function sends a request to the specified URL every 5 seconds and calls the provided callback function 
+with the received data.
+
+### What is Long Polling?
+
+**Long Polling** is a variation of HTTP polling where the server holds the request open until new data is available or a timeout occurs. 
+Once the server responds, the client immediately sends another request, creating a continuous loop of requests.
+
+```javascript copy
+async function fetchData(url, callback) {
+  const response = await fetch(url); // Server will keep the connection open until new data is available
+  if (response.ok) {
+    const data = await response.json();
+    callback(data);
+  }
+  await fetchData(); // Send the next request immediately
+}
+
+// Usage
+fetchData('/api/long-poll', (data) => {
+  console.log('Received data:', data);
+});
+```
+
+In this example, the `fetchData` function sends a request to the specified URL and waits for the server to respond with new data. 
+Once the response is received, it immediately sends another request, creating a continuous loop.
+
+### HTTP Polling vs Long Polling
+
+HTTP polling and long polling are both techniques to keep the client updated with real-time data, but they differ in how they achieve this.
+
+- **HTTP Polling**: Sends periodic requests to the server at regular intervals, regardless of whether new data is available.
+- **Long Polling**: Keeps the request open until the server has new data to send, reducing the number of requests and providing near real-time updates.
+
+### Cons of HTTP Polling
+
+While HTTP polling is a straightforward technique to keep the client updated with real-time data, it has several drawbacks:
+
+- **High Server Load**: Periodic requests can create a significant load on the server, especially if many clients are polling frequently. This can lead to increased server resource usage and potential performance issues.
+- **Increased Network Traffic**: Constantly sending requests, even when no new data is available, results in unnecessary network traffic. This can be inefficient and may lead to higher bandwidth usage.
+- **Latency**: Since requests are sent at fixed intervals, there can be a delay between when new data is available and when the client receives it. This can result in a less responsive user experience compared to other techniques like long polling or WebSockets.
+- **Scalability Issues**: As the number of clients increases, the server must handle a growing number of requests, which can be challenging to scale effectively. This can lead to performance bottlenecks and increased infrastructure costs.
+- **Battery Drain**: On mobile devices, frequent polling can lead to increased battery consumption, as the device must constantly wake up to send and receive data.
