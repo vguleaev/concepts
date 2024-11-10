@@ -20,7 +20,10 @@ Skeletons can be used to provide a placeholder UI while the actual component is 
 
 ### Code Splitting and Lazy Import
 
-Code splitting can be done at the component level using `React.lazy` and `Suspense`.
+Code splitting can be achieved in two says: **Dynamic imports** and **Route based** code splitting. 
+Most bundling tools like Webpack, Rollup, and Parcel support code splitting.
+
+Code splitting can be done at the component level using `React.lazy` and `Suspense`: 
 
 ```javascript copy
 import React, { Suspense } from 'react';

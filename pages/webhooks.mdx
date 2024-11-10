@@ -1,3 +1,58 @@
 # Webhooks
 
-TBD
+### What are Webhooks?
+
+A **webhook** is a method for one application to provide real-time data to another application. 
+
+Unlike traditional APIs where you need to poll for data, webhooks allow you to receive data as soon as an event occurs in a **push** fashion. 
+
+This is achieved by setting up a URL endpoint that the webhook provider can send HTTP requests to whenever a specified event happens.
+
+### When to use?
+
+Use webhooks to receive real-time updates and automate workflows. They are particularly useful for integrating different 
+services and applications, such as receiving notifications for new user registrations, payment transactions, or updates to a database.
+
+### How does it work?
+
+When an event occurs in the webhook provider's system, it sends an HTTP POST request to the specified URL endpoint 
+with a payload containing the event data. The receiving application can then process this data and take appropriate actions.
+
+![Image](/images/webhooks-d.png)
+
+### Key Features
+
+- **Real-Time Updates**: Receive data instantly as events occur, eliminating the need for polling.
+- **Automation**: Automate workflows by triggering actions in response to specific events.
+- **Integration**: Easily integrate different services and applications by setting up webhooks to communicate between them.
+
+### Common Use Cases
+
+- **Notifications**: Receive real-time notifications for events such as new user registrations, form submissions, or payment transactions.
+- **Data Synchronization**: Keep data synchronized between different systems by receiving updates whenever data changes.
+- **Automated Workflows**: Trigger automated workflows in response to specific events, such as sending an email when a new user signs up or updating a CRM system when a sale is made.
+
+### Example of Setting Up a Webhook
+
+Here is an example of setting up a webhook endpoint using Express and Node.js:
+
+```javascript copy
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const event = req.body;
+
+  // Process the event data
+  console.log('Received event:', event);
+
+  // Respond to the webhook provider
+  res.status(200).send('Event received');
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
