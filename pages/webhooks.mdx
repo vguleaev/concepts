@@ -56,3 +56,17 @@ app.post('/webhook', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+```
+
+In this example, the `/webhook` endpoint receives HTTP POST requests from the webhook provider. 
+The event data is processed, and a response is sent back to acknowledge receipt of the event.
+
+### Popular Webhook Providers
+- [GitHub](https://docs.github.com/en/webhooks): Provides webhooks for various events such as push events, pull requests, and issues.
+- [Stripe](https://docs.stripe.com/webhooks): Uses webhooks to notify your application about events such as successful payments, refunds, and disputes.
+- [Slack](https://api.slack.com/messaging/webhooks): Allows you to send messages to Slack channels using webhooks.
+
+### Webhooks vs Polling
+
+- **Webhooks**: Receive data instantly as events occur, reducing latency and improving efficiency.
+- **Polling**: Requires periodic requests to check for updates, which can be resource-intensive and less efficient.

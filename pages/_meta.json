@@ -1,7 +1,8 @@
 {
   "index": "Introduction",
-  "reverse-proxy": "Reverse Proxy",
   "webhooks": "Webhooks",
+  "reverse-proxy": "Reverse Proxy",
+  "websockets": "WebSockets",
   "frontend": "Frontend",
   "contact": {
     "title": "Contact ↗",
