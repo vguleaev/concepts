@@ -1,3 +1,69 @@
 # WebSockets
 
-TBD
+### What are WebSockets?
+
+**WebSockets** are a communication protocol that provides full-duplex communication channels over a single, long-lived connection between a client and a server. Unlike traditional HTTP requests, which are half-duplex and require a new connection for each request/response pair, WebSockets allow for continuous, bidirectional communication.
+
+### When to use?
+
+Use WebSockets for applications that require real-time, low-latency communication between the client and server. Common use cases include chat applications, live sports updates, online gaming, and collaborative editing tools.
+
+### How does it work?
+
+When a client (such as a web browser or mobile app) establishes a WebSocket connection with a server, the connection remains open, allowing both the client and server to send and receive messages at any time. This is achieved through a WebSocket handshake, which upgrades an HTTP connection to a WebSocket connection.
+
+![Image](/images/websockets-d.png)
+
+### Key Features
+
+- **Full-Duplex Communication**: Allows for simultaneous, bidirectional communication between the client and server.
+- **Low Latency**: Provides real-time communication with minimal delay, making it ideal for applications that require instant updates.
+- **Persistent Connection**: Maintains a single, long-lived connection, reducing the overhead of establishing new connections for each message.
+- **Efficient Data Transfer**: Uses a lightweight protocol with minimal overhead, making it more efficient than traditional HTTP requests for frequent data exchanges.
+
+### Common Use Cases
+
+- **Chat Applications**: Enable real-time messaging between users with instant delivery of messages.
+- **Live Sports Updates**: Provide real-time scores and updates for live sports events.
+- **Online Gaming**: Facilitate real-time communication between players in multiplayer online games.
+- **Collaborative Editing**: Allow multiple users to edit documents simultaneously with real-time updates.
+
+### Example of Setting Up a WebSocket Server
+
+Here is an example of setting up a WebSocket server using Node.js and the `ws` library:
+
+```javascript copy
+const WebSocket = require('ws');
+const server = new WebSocket.Server({ port: 8080 });
+
+server.on('connection', (socket) => {
+  console.log('Client connected');
+
+  socket.on('message', (message) => {
+    console.log('Received:', message);
+    // Echo the message back to the client
+    socket.send(`Server: ${message}`);
+  });
+
+  socket.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
+console.log('WebSocket server running at ws://localhost:8080');
+```
+
+In this example, the WebSocket server listens for connections on port 8080. When a client connects, the server logs 
+the connection and sets up event handlers for receiving messages and handling disconnections. The server echoes received messages back to the client.
+
+### Popular WebSocket Libraries
+
+- [Socket.IO](https://socket.io/): A popular library that provides a simple and robust API for WebSocket communication, with fallback options for older browsers.
+- [ws](https://github.com/websockets/ws): A lightweight and efficient WebSocket library for Node.js.
+- [SockJS](https://github.com/sockjs/sockjs-client): A JavaScript library that provides a WebSocket-like API with fallback options for environments that do not support WebSockets.
+
+### WebSocket vs Server-Sent Events (SSE)
+
+- **WebSocket**: Provides full-duplex communication over a single connection, allowing for bidirectional communication between the client and server.
+- **Server-Sent Events**: Provides one-way communication from the server to the client, allowing the server to push updates to the client. 
+SSE is simpler to set up than WebSockets but does not support bidirectional communication.
