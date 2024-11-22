@@ -1,3 +1,108 @@
 # Service Workers
 
-TBD
+### What are Service Workers?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Service Workers** are a browser-specific technology that acts as a proxy between the web application and the network. 
+They run in the background, separate from the main browser thread, and provide features such as offline capabilities, background sync, and push notifications.
+
+### When to use?
+
+Use Service Workers to enhance the performance and user experience of web applications by enabling offline access, 
+improving load times, and providing background functionalities. 
+
+They are particularly useful for Progressive Web Apps (PWAs) and applications that require **real-time updates** or **background processing**.
+
+### How does it work?
+
+Service Workers intercept network requests and can cache resources to enable offline access. 
+They can also handle background tasks such as syncing data with the server or displaying push notifications. 
+
+Service Workers are event-driven and operate independently of the web page.
+
+```javascript copy
+// Registering a Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
+```
+
+In this example, the Service Worker is registered when the page loads, enabling the application to take advantage of the features 
+provided by the Service Worker.
+
+### Key Features
+- **Offline Access**: Service Workers can cache resources to enable offline access to web applications.
+- **Background Sync**: Synchronize data with the server even when the application is not in the foreground.
+- **Push Notifications**: Receive and display notifications to users even when the application is closed.
+- **Improved Performance**: Service Workers can cache resources locally, reducing load times and improving performance.
+- **Event-Driven**: Service Workers respond to events such as fetch, push, and sync, enabling rich functionalities.
+
+### Example of a Service Worker
+
+Here is an example of a basic **Service Worker** that caches resources for offline access:
+
+```javascript copy
+// service-worker.js
+const CACHE_NAME = 'my-cache';
+const urlsToCache = [
+  '/',
+  '/styles/main.css',
+  '/script/main.js'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request);
+      })
+  );
+});
+```
+In this example, the Service Worker caches specified resources during the `install` event and serves cached resources during the 
+`fetch` event, enabling offline access.
+
+### Example of Custom Event Communication
+
+**Service Workers** can communicate with the main page using custom events. Here's an example of sending a message from the Service Worker to the main page:
+
+```javascript copy
+// service-worker.js
+self.addEventListener('message', event => {
+  if (event.data === 'ping') {
+    self.clients.matchAll()
+      .then(clients => {
+        clients.forEach(client => {
+          client.postMessage('pong');
+        });
+      });
+  }
+});
+
+// main.js
+navigator.serviceWorker.controller.postMessage('ping');
+
+navigator.serviceWorker.addEventListener('message', event => {
+  console.log('Received message from Service Worker:', event.data);
+});
+```
+
+In this example, the Service Worker listens for a `message` event and responds with a 'pong' message to all connected clients.
