@@ -106,3 +106,9 @@ navigator.serviceWorker.addEventListener('message', event => {
 ```
 
 In this example, the Service Worker listens for a `message` event and responds with a 'pong' message to all connected clients.
+
+### Cons of Service Workers
+- **Browser Support**: Service Workers are not supported in all browsers, limiting their availability and functionality.
+- **Complexity**: Implementing Service Workers requires understanding of asynchronous programming and event-driven architecture.
+- **Security**: Service Workers can introduce security risks if not implemented correctly, such as caching sensitive data or intercepting requests.
+- **Debugging**: Debugging Service Workers can be challenging due to their background nature and limited visibility in the browser developer tools.

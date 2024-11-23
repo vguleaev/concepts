@@ -72,3 +72,9 @@ the connection and sets up event handlers for receiving messages and handling di
 - **WebSocket**: Provides full-duplex communication over a single connection, allowing for bidirectional communication between the client and server.
 - **Server-Sent Events**: Provides one-way communication from the server to the client, allowing the server to push updates to the client. 
 SSE is simpler to set up than WebSockets but does not support bidirectional communication.
+
+
+### Cons of WebSockets
+- WebSockets require a persistent connection, which can consume more server resources compared to traditional HTTP requests.
+- Firewalls and proxies may block WebSocket connections, limiting their availability in certain network environments.
+- Implementing WebSockets can be more complex than traditional HTTP requests, especially for applications that require advanced features such as authentication and error handling.

@@ -43,3 +43,9 @@ async function updateItemOptimistically(item) {
 const item = { id: 1, name: 'Updated Item' };
 updateItemOptimistically(item);
 ```
+
+### Cons of Optimistic Updates
+- **Data Consistency**: Optimistic updates can lead to temporary inconsistencies between the UI and the server data if the operation fails.
+- **Error Handling**: Handling errors and reverting the UI can add complexity to the application logic.
+- **User Expectations**: Users may expect immediate updates to be reflected in the server data, leading to confusion if the operation fails.
+- **Network Dependency**: Optimistic updates rely on network requests, which can introduce latency and potential failures.
