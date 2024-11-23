@@ -16,8 +16,10 @@ They are particularly useful for Progressive Web Apps (PWAs) and applications th
 
 ### How does it work?
 
-Service Workers intercept network requests and can cache resources to enable offline access. 
-They can also handle background tasks such as syncing data with the server or displaying push notifications. 
+Service workers run in a worker context: they therefore have no DOM access and run on a different thread to the main JavaScript that powers your app. 
+They are non-blocking and designed to be fully asynchronous. Service workers only run over HTTPS, for security reasons.
+
+It takes a form a JavaScript file hat can control the web page/site that it is associated with.
 
 Service Workers are event-driven and operate independently of the web page.
 
