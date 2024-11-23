@@ -5,23 +5,24 @@
 > This concept will be discussed in the context of Frontend development.
 
 **Service Workers** are a browser-specific technology that acts as a proxy between the web application and the network. 
-They run in the background, separate from the main browser thread, and provide features such as offline capabilities, background sync, and push notifications.
+They run in the background, separate from the main browser thread.
 
 ### When to use?
 
-Use Service Workers to enhance the performance and user experience of web applications by enabling offline access, 
-improving load times, and providing background functionalities. 
+Use Service Workers to enhance the performance and user experience of web applications by enabling **offline access**, 
+**intercepting network requests**, **background sync**, **caching**, and **push notifications**.
 
-They are particularly useful for Progressive Web Apps (PWAs) and applications that require **real-time updates** or **background processing**.
+They are particularly useful for Progressive Web Apps (PWAs) and applications that require real-time updates or background processing.
 
 ### How does it work?
 
 Service workers run in a worker context: they therefore have no DOM access and run on a different thread to the main JavaScript that powers your app. 
-They are non-blocking and designed to be fully asynchronous. Service workers only run over HTTPS, for security reasons.
+They are non-blocking and designed to be fully asynchronous. Service Workers are event-driven and operate independently of the web page.
 
 It takes a form a JavaScript file hat can control the web page/site that it is associated with.
 
-Service Workers are event-driven and operate independently of the web page.
+Service worker is registered **once per domain** (per origin). 
+All tabs and windows in the same browser that are open to pages from the same origin will share the same service worker.
 
 ```javascript copy
 // Registering a Service Worker
@@ -38,8 +39,7 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
-In this example, the Service Worker is registered when the page loads, enabling the application to take advantage of the features 
-provided by the Service Worker.
+In this example, the Service Worker from file `service-worker.js` is registered when the page loads.
 
 ### Key Features
 - **Offline Access**: Service Workers can cache resources to enable offline access to web applications.
@@ -61,15 +61,20 @@ const urlsToCache = [
   '/script/main.js'
 ];
 
+// This event is triggered when the service worker is first installed (happens once)
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         return cache.addAll(urlsToCache);
       })
+      .then(() => {
+        return self.skipWaiting(); // forces the waiting service worker to become the active 
+      })
   );
 });
 
+// This event is triggered whenever a network request is made.
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -81,6 +86,19 @@ self.addEventListener('fetch', event => {
 ```
 In this example, the Service Worker caches specified resources during the `install` event and serves cached resources during the 
 `fetch` event, enabling offline access.
+
+### Service Worker Lifecycle
+
+Service workers have a lifecycle that includes **installation**, **activation**, and **control**. 
+
+When a new service worker is installed, it doesn't immediately take control of the pages.
+ Instead, it waits until the old service worker is no longer controlling any pages.
+
+This waiting period prevents the new service worker from disrupting the current user experience by taking control while 
+the user is still interacting with the page.
+
+> You can call `self.skipWaiting()` in the install event to make the new service worker activate immediately:
+
 
 ### Example of Custom Event Communication
 
@@ -114,3 +132,10 @@ In this example, the Service Worker listens for a `message` event and responds w
 - **Complexity**: Implementing Service Workers requires understanding of asynchronous programming and event-driven architecture.
 - **Security**: Service Workers can introduce security risks if not implemented correctly, such as caching sensitive data or intercepting requests.
 - **Debugging**: Debugging Service Workers can be challenging due to their background nature and limited visibility in the browser developer tools.
+
+### Service Worker vs Shared Worker
+
+- Use **Service Workers** for network-related tasks, such as caching, push notifications, and background sync.
+- Use **Shared Workers** for real-time communication and shared computations across multiple tabs or iframes.
+- **Service Workers** operate at the origin level and can intercept network request for all pages under that origin.
+- **Shared Workers** operate at the script level and are shared among all pages that explicably connect to it
