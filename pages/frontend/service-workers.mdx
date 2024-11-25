@@ -83,6 +83,12 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
+// This event is triggered when the service worker is activated.
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activated');
+  self.clients.claim();
+});
 ```
 In this example, the Service Worker caches specified resources during the `install` event and serves cached resources during the 
 `fetch` event, enabling offline access.
@@ -139,3 +145,5 @@ In this example, the Service Worker listens for a `message` event and responds w
 - Use **Shared Workers** for real-time communication and shared computations across multiple tabs or iframes.
 - **Service Workers** operate at the origin level and can intercept network request for all pages under that origin.
 - **Shared Workers** operate at the script level and are shared among all pages that explicably connect to it
+
+> To debug Service Workers or Shared Workers using Chrome DevTools visit `chrome://inspect/#service-workers` or `chrome://inspect/#workers` respectively.
