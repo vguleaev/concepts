@@ -3,6 +3,7 @@
   "webhooks": "Webhooks",
   "reverse-proxy": "Reverse Proxy",
   "websockets": "WebSockets",
+  "api-pagination": "API Pagination",
   "frontend": "Frontend",
   "contact": {
     "title": "Contact ↗",
