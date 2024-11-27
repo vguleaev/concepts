@@ -1,3 +1,73 @@
 # API Pagination
 
-TBD
+### What is a Pagination?
+
+**Pagination** is a technique used to divide a large set of data into smaller, more manageable chunks or pages.
+
+### When to use?
+
+When API need to return **large data sets**, it is recommended to use pagination to improve performance, reduce response times, 
+and prevent overloading the client with too much data at once.
+
+### Types of Pagination
+
+- **Offset-Based Pagination**: This method uses an offset parameter or page number to specify the starting point of the data set to be returned. 
+- **Cursor-Based Pagination**: This method uses a cursor (such as an ID or timestamp) to specify the starting point of the data set to be returned. 
+
+### Offset-Based Pagination 
+
+In offset-based pagination, the client specifies the number of items to skip (**offset**) and the number of items to return (**limit**) in each request.
+
+```http
+GET /api/items?offset=20&limit=10
+```
+
+Alternatively, you can use **page** and **page size** parameters instead.
+
+```http
+GET /api/items?page=3&page_size=10
+```
+
+A SQL database query for offset-based pagination might look like this:
+
+```sql
+SELECT * FROM items 
+ORDER BY id 
+LIMIT 10 OFFSET 20;
+```
+
+A database in this case will skip the first 20 rows and return the next 10 rows.
+
+**Offest-based pagination** is perfect to deal with small datasets. However, it has some limitations when dealing with large datasets.
+
+Your database have to count and skip rows up to offset before returning the actual result. **The larger your offset, the more inefficient** the query becomes.
+
+
+**Pros:**
+- Simple and easy to implement.
+- Allows users to jump to a specific page without having to load all previous pages.
+
+**Cons:**
+- Results can be inconsistent if data is added or removed during pagination.
+- Performance can degrade as the offset increases, especially with large data sets.
+
+### Cursor-Based Pagination
+
+In cursor-based pagination, the client specifies a **cursor** (such as an ID or timestamp) that points to a specific item in the data set.
+
+```http
+GET /api/items?cursor=abc123&limit=10
+```
+
+The response includes a set of items along with a new cursor to retrieve the next page.
+
+```json
+{
+  "data": [
+    {"id": "item1"},
+    {"id": "item2"},
+    ...
+  ],
+  "next_cursor": "def456"
+}
+```
