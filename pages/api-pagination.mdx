@@ -28,6 +28,8 @@ Alternatively, you can use **page** and **page size** parameters instead.
 GET /api/items?page=3&page_size=10
 ```
 
+When implementing page-based pagination, it is often useful to return the total count of items or the total number of pages.
+
 A SQL database query for offset-based pagination might look like this:
 
 ```sql
@@ -38,9 +40,10 @@ LIMIT 10 OFFSET 20;
 
 A database in this case will skip the first 20 rows and return the next 10 rows.
 
-**Offest-based pagination** is perfect to deal with small datasets. However, it has some limitations when dealing with large datasets.
+Offset-based pagination is perfect to deal with small datasets. However, it has some **limitations** when dealing with large datasets. 
+Your database have to count and skip rows up to offset before returning the actual result. 
 
-Your database have to count and skip rows up to offset before returning the actual result. **The larger your offset, the more inefficient** the query becomes.
+**The larger your offset, the more inefficient** the query becomes.
 
 
 **Pros:**
@@ -55,11 +58,13 @@ Your database have to count and skip rows up to offset before returning the actu
 
 In cursor-based pagination, the client specifies a **cursor** (such as an ID or timestamp) that points to a specific item in the data set.
 
+This technique addresses the problems of offset-based pagination by using a stable cursor to navigate through the data set and avoiding the need to skip rows.
+
 ```http
 GET /api/items?cursor=abc123&limit=10
 ```
 
-The response includes a set of items along with a new cursor to retrieve the next page.
+The response includes a set of items together with a **next cursor** to retrieve the next page.
 
 ```json
 {
@@ -71,3 +76,32 @@ The response includes a set of items along with a new cursor to retrieve the nex
   "next_cursor": "def456"
 }
 ```
+
+The client need to use the **next cursor** to fetch the next set of items. It is basically a pointer that server can use to improve performance.
+
+The cursor value can be anything that can be used to identify the next set of items. A common practice is to use the **ID** or a **timestamp**.
+
+A SQL database query for cursor-based pagination might look like this:
+
+```sql
+SELECT * FROM items 
+WHERE id > 'abc123'
+ORDER BY id
+LIMIT 10;
+```
+
+**Indexing** the column used for cursor-based pagination is crucial for query performance.
+
+**Pros:**
+- Better performance for large data sets.
+- Consistent results even if data is added or removed during pagination.
+
+**Cons:**
+- Client need to keep track of the cursor value.
+- Client need to traverse the pages sequentially. Cannot jump to a specific page directly.
+- Requires a stable cursor value.
+
+### Offset vs Cursor Pagination
+
+- **Offset Pagination:** Suitable for smaller datasets or where direct access to a specific page is required.
+- **Cursor Pagination:** Suitable for larger datasets or where consistent results are critical and traversing sequentially is acceptable.
