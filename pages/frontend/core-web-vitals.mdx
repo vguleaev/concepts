@@ -1,0 +1,59 @@
+# Core Web Vitals
+
+### What are Core Web Vitals?
+
+> This concept will be discussed in the context of Frontend development.
+
+**Core Web Vitals** are a set of specific metrics defined by Google to measure the user experience of a web page. These metrics focus on aspects of web performance that affect the user experience, such as loading speed, interactivity, and visual stability.
+
+### Key Metrics
+
+The Core Web Vitals consist of three primary metrics:
+
+1. **Largest Contentful Paint (LCP)**: Measures _loading performance_. LCP marks the point in the page load timeline when the main content has likely loaded. A good LCP score is 2.5 seconds or faster.
+
+2. **Interaction to Next Paint (INP)**: Measures _interactivity_. INP shows the time from when a user first interacts with your site (e.g., when they click a link, tap a button) to the time when the browser is able to respond to that interaction. A good INP score is less than 200 milliseconds.
+
+3. **Cumulative Layout Shift (CLS)**: Measures _visual stability_. CLS shows how much the page layout shifts during the loading phase. A good CLS score is less than 0.1.
+
+### Why are Core Web Vitals Important?
+
+Core Web Vitals are important because they directly impact the user experience. Improving these metrics can lead to better user engagement, higher conversion rates, and improved search engine rankings, as Google uses these metrics as part of its ranking algorithm.
+
+### How to Measure Core Web Vitals?
+
+You can measure Core Web Vitals using various tools provided by Google:
+
+- **Lighthouse**: An open-source, automated tool for improving the quality of web pages. It has audits for performance, accessibility, progressive web apps, SEO, and more.
+- **PageSpeed Insights**: A tool that provides reports on the performance of a page on both mobile and desktop devices and provides suggestions on how to improve that page.
+- **Web Vitals Extension**: A Chrome extension that measures the Core Web Vitals in real-time.
+
+You can also measure Core Web Vitals directly in your web application using the Web Vitals JavaScript library:
+
+```javascript copy
+import { onCLS, onINP, onLCP } from 'web-vitals';
+
+onCLS(console.log);
+onINP(console.log);
+onLCP(console.log);
+```
+
+### Improving Core Web Vitals
+
+**Largest Contentful Paint (LCP):**
+  - Optimize images and videos.
+  - Use a Content Delivery Network (CDN).
+  - Minimize render-blocking JavaScript and CSS.
+  - Preload important resources.
+
+**Interaction to Next Paint (INP):**
+  - Minimize JavaScript execution time.
+  - Break up long tasks.
+  - Use a web worker to run scripts in the background.
+  - Reduce the impact of third-party code.
+
+**Cumulative Layout Shift (CLS):**
+  - Avoid inserting content above existing content.
+  - Use size attributes for images and videos.
+  - Reserve space for dynamic content with CSS.
+  - Ensure that ads, embeds, and iframes have dimensions specified.
