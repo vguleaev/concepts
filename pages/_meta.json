@@ -1,5 +1,6 @@
 {
   "index": "Introduction",
+  "cdn": "CDN",
   "webhooks": "Webhooks",
   "reverse-proxy": "Reverse Proxy",
   "websockets": "WebSockets",
