@@ -1,3 +1,65 @@
-# CDN
+# Content Delivery Network (CDN)
 
-TBD
+### What is a CDN?
+
+A **Content Delivery Network (CDN)** is a distributed network of servers that deliver web content and resources to users based on their **geographic location**. 
+CDNs aim to improve the performance, reliability, and security of web applications by caching content closer to the end-users.
+
+### When to use?
+
+Use a CDN to improve **performance**, **scalability**, **security**, and **reliability** of your web applications.
+
+### How does it work?
+
+When a client, such as a browser or mobile app, sends a request for content, the request is routed to the nearest CDN server. 
+The CDN server then serves the cached content directly to the client, reducing the load on the origin server and decreasing latency.
+
+![Image](/images/cdn-diagram.png)
+
+### Key features
+
+- **Performance**: Reduces latency by serving content from servers closer to the end-users, resulting in faster load times.
+- **Scalability**: Handles large volumes of traffic by distributing requests across multiple servers, preventing any single server from being overwhelmed.
+- **Security**: Provides protection against DDoS attacks, data breaches, and other security threats by acting as a barrier between the client and the origin server.
+- **Reliability**: Ensures high availability and uptime by distributing content across multiple servers, reducing the risk of server failures.
+
+### Common Use Cases
+
+Speeds up the delivery of web content by caching static content and optimizing resource delivery. 
+Improves performance, reduces latency, and enhances user experience.
+
+Example of static content includes: images, videos, CSS, JavaScript files, and other assets that do not change frequently.
+
+### How to set up a CDN?
+
+To set up a CDN for your web application, follow these steps:
+
+1. **Choose Provider**: Select a CDN provider that meets your requirements.
+2. **Integrate**: Configure your web application to use the CDN by updating the URLs of static assets to point to the CDN's domain.
+
+```html
+<!-- Original URLs -->
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/js/scripts.js"></script>
+<img src="/images/logo.png" alt="Logo">
+
+<!-- CDN URLs -->
+<link rel="stylesheet" href="https://cdn.example.com/styles.css">
+<script src="https://cdn.example.com/js/scripts.js"></script>
+<img src="https://cdn.example.com/images/logo.png" alt="Logo">
+```
+
+In this example, the URLs for the CSS, JavaScript, and image files have been updated to point to the **CDN**.
+
+### Disadvantages
+
+- **Cost**: CDNs can be expensive, especially for high-traffic websites or applications.
+- **Dependency**: Relying on a third-party CDN provider means that your website's performance and availability are dependent on the provider's infrastructure. 
+Any downtime or performance issues on the provider's end can impact your website.
+- **Cache Invalidation**: Ensuring that cached content is up-to-date and avoiding stale content can be challenging.
+
+### Popular CDN Providers
+
+- [Cloudflare](https://www.cloudflare.com/): A global CDN provider known for its security features, performance optimization, and DDoS protection.
+- [Akamai](https://www.akamai.com/): One of the largest and most established CDN providers, offering a wide range of performance and security solutions.
+- [Amazon CloudFront](https://aws.amazon.com/cloudfront/): A CDN service provided by AWS, known for its scalability, reliability, and integration with other AWS services.
