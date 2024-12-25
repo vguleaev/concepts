@@ -1,0 +1,123 @@
+# OOP Principles
+
+### What is Object-Oriented Programming?
+
+**Object-Oriented Programming (OOP)** is a programming paradigm based on the concept of "objects," 
+which can contain data and code to manipulate that data. OOP aims to increase the modularity, 
+reusability, and maintainability of code by organizing it into objects and classes.
+
+### Core OOP Principles
+
+There are four core principles of OOP:
+
+1. **Encapsulation**: Encapsulation is the practice of hiding the implementation details of a class properties and 
+methods by restricting access to class data. Encapsulation is achieved using access modifiers like `private`, `protected`, 
+and `public`.
+
+```typescript copy
+class Person {
+  private name: string;
+  private age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public getAge(): number {
+    return this.age;
+  }
+
+  public setAge(age: number): void {
+    this.age = age;
+  }
+}
+```
+
+2. **Inheritance**: Inheritance is a mechanism where a new class (child) inherits the properties and 
+behaviors of an existing class (parent). This allows for code reuse and the creation of a hierarchical 
+relationship between classes.
+
+```typescript copy
+class Animal {
+    public eat(): void {
+        console.log("This animal eats food.");
+    }
+}
+
+class Dog extends Animal {
+    public bark(): void {
+        console.log("The dog barks.");
+    }
+}
+
+const dog = new Dog();
+dog.eat(); // Inherited method
+dog.bark(); // Subclass method
+```
+
+3. **Polymorphism**: Polymorphism allows objects of different classes to be treated as objects of a 
+common superclass. It enables a single interface to represent different underlying forms (data types). 
+Polymorphism is achieved through method overriding and method overloading.
+
+```typescript copy
+class Animal {
+    public makeSound(): void {
+        console.log("This animal makes a sound.");
+    }
+}
+
+class Cat extends Animal {
+    public makeSound(): void {
+        console.log("The cat meows.");
+    }
+}
+
+class Dog extends Animal {
+    public makeSound(): void {
+        console.log("The dog barks.");
+    }
+}
+
+const myCat: Animal = new Cat();
+const myDog: Animal = new Dog();
+
+myCat.makeSound(); // Outputs: The cat meows.
+myDog.makeSound(); // Outputs: The dog barks.
+```
+
+4. **Abstraction**: Abstraction is the concept of hiding the complex implementation details behind a simpler interface. 
+It allows the programmer to write code for abstractions, not actual implementations. 
+Abstraction is achieved using abstract classes and interfaces.
+
+```typescript copy
+abstract class Shape {
+    abstract draw(): void;
+}
+
+class Circle extends Shape {
+    public draw(): void {
+        console.log("Drawing a circle.");
+    }
+}
+
+class Rectangle extends Shape {
+    public draw(): void {
+        console.log("Drawing a rectangle.");
+    }
+}
+
+const circle: Shape = new Circle();
+const rectangle: Shape = new Rectangle();
+
+circle.draw(); // Outputs: Drawing a circle.
+rectangle.draw(); // Outputs: Drawing a rectangle.
+```
