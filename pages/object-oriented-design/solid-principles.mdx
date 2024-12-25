@@ -1,0 +1,247 @@
+# SOLID Principles
+
+### What are SOLID Principles?
+
+**SOLID** is an acronym that represents five principles of object-oriented design that aim to make 
+software designs more understandable, flexible, and maintainable. These principles were introduced by Robert C. Martin 
+in his 2000 paper, "Design Principles and Design Patterns."
+
+The SOLID principles are:
+
+1. **Single Responsibility Principle (SRP)**: A class should have only one reason to change, meaning that a class should have only one job or responsibility.
+2. **Open/Closed Principle (OCP)**: Classes should be open for extension but closed for modification. This means that you should be able to extend the behavior of a class without modifying its source code.
+3. **Liskov Substitution Principle (LSP)**: Objects of a parent class should be replaceable with objects of its subclasses without affecting the correctness of the program. In other words, a subclass should be able to replace its superclass without breaking the program.
+4. **Interface Segregation Principle (ISP)**: A client should not be forced to implement an interface that it does not use. Instead of creating large interfaces, you should create smaller, more specific interfaces.
+5. **Dependency Inversion Principle (DIP)**: High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions.
+
+### Why are SOLID Principles Important?
+
+The SOLID principles are important because they help developers create maintainable, scalable, and flexible software systems. By following these principles, developers can write code that is easier to understand, test, and maintain. The SOLID principles also help developers write code that is more reusable and less error-prone.
+
+### Examples of SOLID Principles
+
+1. **Single Responsibility Principle (SRP)**: A class should have only one reason to change.
+
+```typescript copy
+class User {
+    public saveUser(user: User): void {
+        // Save user to the database
+    }
+
+    public sendEmail(user: User): void {
+        // Send an email to the user
+    }
+}
+```
+
+In the example above, the `User` class has two responsibilities: saving a user to the database and sending an email to the user. 
+To apply SRP here, we can refactor the class to extract these responsibilities into two different classes:
+
+```typescript copy
+class User {
+    public saveUser(user: User): void {
+        // Save user to the database
+    }
+}
+
+class EmailService {
+    public sendEmail(user: User): void {
+        // Send an email to the user
+    }
+}
+```
+
+2. **Open/Closed Principle (OCP)**: Classes should be open for extension but closed for modification.
+
+```typescript copy
+class Circle {
+    public draw(): void {
+        console.log("Drawing a circle");
+    }
+}
+
+class Square {
+    public draw(): void {
+        console.log("Drawing a square");
+    }
+}
+
+class ShapeDrawer {
+    public drawShape(shape: any): void {
+        if (shape instanceof Circle) {
+            shape.draw();
+        } else if (shape instanceof Square) {
+            shape.draw();
+        }
+    }
+}
+```
+
+In the example above, the `ShapeDrawer` class violates the OCP because it needs to be modified every time a new shape 
+is added. To apply OCP here, we can refactor the code to use an abstract class or interface:
+
+```typescript copy
+interface Shape {
+  draw(): void;
+}
+
+class Circle implements Shape {
+    public draw(): void {
+        console.log("Drawing a circle");
+    }
+}
+
+class Square implements Shape {
+    public draw(): void {
+        console.log("Drawing a square");
+    }
+}
+
+class ShapeDrawer {
+    public drawShape(shape: Shape): void {
+        shape.draw();
+    }
+}
+```
+
+3. **Liskov Substitution Principle (LSP)**: Objects of a superclass should be replaceable with objects of its subclasses.
+
+```typescript copy
+class Animal {
+    public makeSound(): void {
+        console.log("This animal makes a sound.");
+    }
+}
+
+class Cat extends Animal {
+    public makeSound(): void {
+        console.log("The cat meows.");
+    }
+}
+
+class Dog extends Animal {
+    public makeSound(): void {
+        console.log("The dog barks.");
+    }
+}
+
+const myCat: Animal = new Cat();
+const myDog: Animal = new Dog();
+
+myCat.makeSound(); // Outputs: The cat meows.
+myDog.makeSound(); // Outputs: The dog barks.
+```
+
+4. **Interface Segregation Principle (ISP)**: A client should not be forced to implement an interface that it does not use.
+
+```typescript copy
+interface Shape {
+    draw(): void;
+}
+
+interface Circle extends Shape {
+    drawCircle(): void;
+}
+
+interface Rectangle extends Shape {
+    drawRectangle(): void;
+}
+
+class Circle implements Circle {
+    public draw(): void {
+        console.log("Drawing a circle");
+    }
+
+    public drawCircle(): void {
+        console.log("Drawing a circle");
+    }
+}
+
+class Rectangle implements Rectangle {
+    public draw(): void {
+        console.log("Drawing a rectangle");
+    }
+
+    public drawRectangle(): void {
+        console.log("Drawing a rectangle");
+    }
+}
+```
+
+In the example above, the `Shape` interface violates the ISP because it forces the `Circle` and `Rectangle` classes to implement the `draw()` method, which they do not use. To apply ISP here, we can refactor the code to use more specific interfaces:
+
+To apply ISP here, we can refactor the code to use more specific interfaces:
+
+```typescript copy
+interface Circle {
+    drawCircle(): void;
+}
+
+interface Rectangle {
+    drawRectangle(): void;
+}
+
+class Circle implements Circle {
+    public drawCircle(): void {
+        console.log("Drawing a circle");
+    }
+}
+
+class Rectangle implements Rectangle {
+    public drawRectangle(): void {
+        console.log("Drawing a rectangle");
+    }
+}
+```
+
+5. **Dependency Inversion Principle (DIP)**: High-level modules should not depend on low-level modules.
+
+```typescript copy
+class Database {
+  public saveData(data: any): void {
+    // Save data to the database
+  }
+}
+
+class UserService {
+  private database: Database;
+
+  constructor(database: Database) {
+    this.database = database;
+  }
+
+  public saveUser(user: any): void {
+    this.database.saveData(user);
+  }
+}
+```
+
+In the example above, the `UserService` class violates the DIP because it depends on the `Database` class. 
+To apply DIP here, we can refactor the code to use an interface:
+
+```typescript copy
+interface Database {
+  saveData(data: any): void;
+}
+
+class MySQLDatabase implements Database {
+  public saveData(data: any): void {
+    // Save data to a MySQL database
+  }
+}
+
+class UserService {
+  private database: Database;
+
+  constructor(database: Database) {
+    this.database = database;
+  }
+
+  public saveUser(user: any): void {
+    this.database.saveData(user);
+  }
+}
+```
+
+By following the SOLID principles, developers can create software systems that are easier to maintain, test, and extend.
+
