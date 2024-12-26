@@ -1,0 +1,272 @@
+# Design Patterns
+
+### What are Design Patterns?
+
+**Design Patterns** are solutions to commonly-occurring problems in software design. 
+
+Design patterns help developers by providing a common language and set of best practices for solving common design problems. 
+
+They were originally introduced by the "Gang of Four" (Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides) in 
+their book, _"Design Patterns: Elements of Reusable Object-Oriented Software."_
+
+
+### Disadvantages of Design Patterns
+
+1. **Overengineering**: Design patterns can sometimes lead to overengineering, where developers use complex patterns to solve simple problems.
+2. **Complexity**: Design patterns can bring unnecessary complexity, if applied at wrong places.
+3. **Learning Curve**: Developers who are not familiar with them might end up getting confused and spend more time on code changes.
+
+### Types of Design Patterns
+
+There are three main types of design patterns: **Creational**, **Structural** and **Behavioral**.
+
+**Creational Patterns** deal with _object creation mechanisms_ for specific situation without revealing the creation method. Creational design patterns are:
+- Singleton
+- Factory Method
+- Abstract Factory
+- Builder
+- Prototype
+
+**Structural Patterns** deal with _object and classes composition_ and relationships between different objects. Structural design patterns are:
+- Adapter
+- Bridge
+- Composite
+- Decorator
+- Facade
+- Flyweight
+- Proxy
+
+**Behavioral Patterns** deal with _communication_ between different objects. Behavioral design patterns are:
+- Chain of Responsibility
+- Command
+- Interpreter
+- Iterator
+- Mediator
+- Memento
+- Observer
+- State
+- Strategy
+- Template Method
+- Visitor
+
+### Examples of Design Patterns
+
+#### Creational Patterns
+
+1. **Singleton**: Ensures that a class has only one instance and provides a global point of access to it.
+
+```typescript copy
+class Singleton {
+    private static instance: Singleton;
+
+    private constructor() {}
+
+    public static getInstance(): Singleton {
+        if (!Singleton.instance) {
+            Singleton.instance = new Singleton();
+        }
+        return Singleton.instance;
+    }
+}
+
+const singleton1 = Singleton.getInstance();
+const singleton2 = Singleton.getInstance();
+
+console.log(singleton1 === singleton2); // true
+```
+
+2. **Factory Method**: Defines a method for creating objects without specifying their concrete classes. This method is used
+instead of using a direct constructor call (`new` operator).
+
+```typescript copy
+interface Animal {
+    speak(): void;
+}
+
+class Dog implements Animal {
+    public speak(): void {
+        console.log("The dog barks.");
+    }
+}
+
+class Cat implements Animal {
+    public speak(): void {
+        console.log("The cat meows.");
+    }
+}
+
+class AnimalFactory {
+    public getAnimal(type: string): Animal {
+        switch (type) {
+            case "dog":
+                return new Dog();
+            case "cat":
+                return new Cat();
+            default:
+                throw new Error("Invalid animal type.");
+        }
+    }
+}
+
+const animalFactory = new AnimalFactory();
+const dog = animalFactory.getAnimal("dog");
+const cat = animalFactory.getAnimal("cat");
+
+dog.speak(); // Outputs: The dog barks.
+cat.speak(); // Outputs: The cat meows.
+```
+
+3. **Abstract Factory**: Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+```typescript copy
+interface Button {
+  paint(): void;
+}
+
+interface Checkbox {
+  paint(): void;
+}
+
+class WinButton implements Button {
+  public paint(): void {
+    console.log('Windows button is painted.');
+  }
+}
+
+class WinCheckbox implements Checkbox {
+  public paint(): void {
+    console.log('Windows checkbox is painted.');
+  }
+}
+
+class MacButton implements Button {
+  public paint(): void {
+    console.log('Mac button is painted.');
+  }
+}
+
+class MacCheckbox implements Checkbox {
+  public paint(): void {
+    console.log('Mac checkbox is painted.');
+  }
+}
+
+interface GUIFactory {
+  createButton(): Button;
+  createCheckbox(): Checkbox;
+}
+
+class WinFactory implements GUIFactory {
+  public createButton(): Button {
+    return new WinButton();
+  }
+
+  public createCheckbox(): Checkbox {
+    return new WinCheckbox();
+  }
+}
+
+class MacFactory implements GUIFactory {
+  public createButton(): Button {
+    return new MacButton();
+  }
+
+  public createCheckbox(): Checkbox {
+    return new MacCheckbox();
+  }
+}
+
+const config = 'WIN'; // or "MAC"
+let factory: GUIFactory;
+
+if (config === 'WIN') {
+  factory = new WinFactory();
+} else if (config === 'MAC') {
+  factory = new MacFactory();
+} else {
+  throw new Error('Unknown OS.');
+}
+
+const button = factory.createButton();
+const checkbox = factory.createCheckbox();
+
+button.paint(); // Outputs: Windows button is painted.
+checkbox.paint(); // Outputs: Windows checkbox is painted.
+```
+
+4. **Builder**: Constructs complex objects step by step. It allows constructing different representations of an object 
+using the same construction functions.
+
+```typescript copy
+class Task {
+  name: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high';
+  dueDate: Date;
+}
+
+interface ITaskBuilder {
+  setName(name: string): void;
+  setDescription(text: string): void;
+  setPriority(priority: 'low' | 'medium' | 'high'): void;
+  setDueDate(date: Date): void;
+}
+
+class TaskBuilder implements ITaskBuilder {
+  private task: Task;
+
+  constructor() {
+    this.task = new Task();
+  }
+
+  public reset(): void {
+    this.task = new Task();
+  }
+
+  public setDescription(text: string): TaskBuilder {
+    this.task.description = text;
+    return this;
+  }
+
+  public setPriority(priority: 'low' | 'medium' | 'high'): TaskBuilder {
+    this.task.priority = priority;
+    return this;
+  }
+
+  public setDueDate(date: Date): TaskBuilder {
+    this.task.dueDate = date;
+    return this;
+  }
+
+  public setName(name: string): TaskBuilder {
+    this.task.name = name;
+    return this;
+  }
+
+  public build(): Task {
+    const result = this.task;
+    this.reset();
+    return result;
+  }
+}
+
+function buildSimpleTask(): Task {
+  const builder = new TaskBuilder();
+  builder
+    .setName('Finish book')
+    .setPriority('low');
+  return builder.build();
+}
+
+function buildUrgentMeetingTask(): Task {
+  const builder = new TaskBuilder();
+  builder
+    .setName('Meet friend')
+    .setDescription('Meet friend at the train station')
+    .setPriority('high')
+    .setDueDate(new Date('2024-12-31'));
+  return builder.build();
+}
+```
+
+
