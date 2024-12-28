@@ -269,4 +269,28 @@ function buildUrgentMeetingTask(): Task {
 }
 ```
 
+4. **Prototype**: Creates new objects by copying an existing object, known as the prototype. Usually involves creating a `clone` method,
+which returns a copy of object.
+
+```typescript copy
+class Sheep {
+  name: string;
+  weight: number;
+
+  constructor(name: string, weight: number) {
+    this.name = name;
+    this.weight = weight;
+  }
+
+  clone(): Sheep {
+    return new Sheep(this.name, this.weight);
+  }
+}
+
+const originalSheep = new Sheep('Jolly', 20);
+const clonedSheep = originalSheep.clone();
+
+console.log(clonedSheep.name); // Output: Jolly
+console.log(clonedSheep.weight); // Output: 20
+```
 
