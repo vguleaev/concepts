@@ -269,7 +269,7 @@ function buildUrgentMeetingTask(): Task {
 }
 ```
 
-4. **Prototype**: Creates new objects by copying an existing object, known as the prototype. Usually involves creating a `clone` method,
+5. **Prototype**: Creates new objects by copying an existing object, known as the prototype. Usually involves creating a `clone` method,
 which returns a copy of object.
 
 ```typescript copy
@@ -299,37 +299,80 @@ console.log(clonedSheep.weight); // Output: 20
 1. **Adapter**: Allows objects with incompatible interfaces to collaborate.
 
 ```typescript copy
-interface Target {
-  request(): string;
+interface MicroUsbPort { // Target interface
+  connect(): string;
 }
 
-class Adaptee {
-  public specificRequest(): string {
-    return 'Adaptee: Specific request.';
+class UsbCable { // Adaptee
+  public specificConnect(): string {
+    return 'UsbCable';
   }
 }
 
-class Adapter implements Target {
-  private adaptee: Adaptee;
+class MicroUsbAdapter implements MicroUsbPort { // Adapter
+  private adaptee: UsbCable;
 
-  constructor(adaptee: Adaptee) { 
+  constructor(adaptee: UsbCable) { 
     this.adaptee = adaptee;
   }
 
-  public request(): string {
-    return `Adapter: (TRANSLATED) ${this.adaptee.specificRequest()}`;
+  public connect(): string {
+    return `MicroUsbAdapter connects usb port with ${this.adaptee.specificConnect()}`;
   }
 }
 
-const adaptee = new Adaptee();
-const adapter = new Adapter(adaptee);
+const adaptee = new UsbCable();
+const adapter = new MicroUsbAdapter(adaptee);
 
-console.log(adapter.request()); // Output: Adapter: (TRANSLATED) Adaptee: Specific request.
+adapter.connect(); // Output: MicroUsbAdapter connects usb port with UsbCable
 ```
 
 2. **Bridge**: Decouples an abstraction from its implementation so that the two can vary independently.
 
-TBD
+```typescript copy
+interface Device { // Implementation
+  isEnabled(): boolean;
+  enable(): void;
+  disable(): void;
+}
+
+class TV implements Device { // Concrete implementation
+  private enabled = false;
+
+  public isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  public enable(): void {
+    this.enabled = true;
+  }
+
+  public disable(): void {
+    this.enabled = false;
+  }
+}
+
+class Remote { // Abstraction
+  protected device: Device;
+
+  constructor(device: Device) {
+    this.device = device;
+  }
+
+  public togglePower(): void {
+    if (this.device.isEnabled()) {
+      this.device.disable();
+    } else {
+      this.device.enable();
+    }
+  }
+}
+
+const tv = new TV();
+const remote = new Remote(tv);
+
+remote.togglePower();
+```
 
 3. **Composite**: Composes objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
 
