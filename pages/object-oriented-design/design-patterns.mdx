@@ -569,7 +569,7 @@ tree1.draw(); // Output: Drawing tree pine at (1, 2) with color green and textur
 tree2.draw(); // Output: Drawing tree oak at (3, 4) with color brown and texture rough
 ```
 
-7. **Proxy**: Provides a placeholder for another object to control access to it.
+7. **Proxy**: Provides a placeholder for another object to control access to it. 
 
 ```typescript copy
 interface Image {
@@ -596,12 +596,12 @@ class ProxyImage implements Image {
   }
 
   public display(): void {
-    if(this.canDisplay()) {
+    if(this.canAccess()) {
       this.realImage.display();
     }
   }
 
-  private canDisplay(): boolean {
+  private canAccess(): boolean {
     return true; // Add logic to check if image can be displayed
   }
 }
@@ -613,4 +613,191 @@ proxy.display(); // Output: Displaying image picture.jpg
 
 #### Behavioral Patterns
 
-TBD
+1. **Chain of Responsibility**: Passes a request along a chain of handlers. Each handler decides either to process the request or to pass it to the next handler.
+
+```typescript copy
+abstract class Handler {
+  protected nextHandler: Handler;
+
+  public setNextHandler(nextHandler: Handler) {
+    this.nextHandler = nextHandler;
+  }
+
+  public handleRequest(request: string) {
+    if (this.nextHandler) {
+      this.nextHandler.handleRequest(request);
+    }
+  }
+}
+
+class TechnicalSupportHandler extends Handler {
+  public handleRequest(request: string): void {
+    if (request === 'technical') {
+      console.log('Technical support is handling request');
+    } else {
+      super.handleRequest(request);
+    }
+  }
+}
+
+class GeneralSupportHandler extends Handler {
+  public handleRequest(request: string): void {
+    if (request === 'general') {
+      console.log('General support is handling request');
+    } else {
+      super.handleRequest(request);
+    }
+  }
+}
+
+const handler1 = new TechnicalSupportHandler();
+const handler2 = new GeneralSupportHandler();
+handler1.setNextHandler(handler2);
+
+handler1.handleRequest('technical'); // Output: Technical support is handling request
+handler1.handleRequest('general'); // Output: General support is handling request
+```
+
+2. **Command**: Converts requests or simple operations into objects. It decouples the objects that send requests from the objects responsible for executing them.
+
+```typescript copy
+interface Command {
+  execute(): void;
+}
+
+class BankAccount {
+  private balance: number;
+
+  constructor(balance: number) {
+    this.balance = balance;
+  }
+
+  public deposit(amount: number) {
+    this.balance += amount;
+  }
+
+  public withdraw(amount: number) {
+    this.balance -= amount;
+  }
+
+  public getBalance(): number {
+    return this.balance;
+  }
+}
+
+class WithdrawCommand implements Command {
+  private account: BankAccount;
+  private amount: number;
+
+  constructor(account: BankAccount, amount: number) {
+    this.account = account;
+    this.amount = amount;
+  }
+
+  public execute() {
+    this.account.withdraw(this.amount);
+  }
+}
+
+class DepositCommand implements Command {
+  private account: BankAccount;
+  private amount: number;
+
+  constructor(account: BankAccount, amount: number) {
+    this.account = account;
+    this.amount = amount;
+  }
+
+  public execute(): void {
+    this.account.deposit(this.amount);
+  }
+}
+
+const account = new BankAccount(100);
+const deposit = new DepositCommand(account, 50);
+const withdraw = new WithdrawCommand(account, 25);
+
+const commands: Command[] = [deposit, withdraw];
+commands.forEach(command => command.execute());
+```
+
+3. Iterator: Provides a way to traverse the elements of a collection sequentially without exposing its underlying representation.
+
+```typescript copy
+interface Iterator<T> {
+  next(): T | null;
+  hasNext(): boolean;
+}
+
+class ListIterator<T> implements Iterator<T> {
+  private collection: T[];
+  private position: number = 0;
+
+  constructor(collection: T[]) {
+    this.collection = collection;
+  }
+
+  public next(): T | null {
+    if (this.hasNext()) {
+      return this.collection[this.position++];
+    }
+    return null;
+  }
+
+  public hasNext(): boolean {
+    return this.position < this.collection.length;
+  }
+}
+
+const collection = [1, 2, 3, 4, 5];
+const iterator = new ListIterator(collection);
+
+while (iterator.hasNext()) {
+  console.log(iterator.next()); // Output: 1, 2, 3, 4, 5
+}
+```
+
+4. Strategy: Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
+```typescript copy
+interface Strategy {
+  execute(a: number, b: number): number;
+}
+
+class AddStrategy implements Strategy {
+  public execute(a: number, b: number): number {
+    return a + b;
+  }
+}
+
+class SubtractStrategy implements Strategy {
+  public execute(a: number, b: number): number {
+    return a - b;
+  }
+}
+
+class Calculator {
+  private strategy: Strategy;
+
+  constructor(strategy: Strategy) {
+    this.strategy = strategy;
+  }
+
+  public setStrategy(strategy: Strategy): void {
+    this.strategy = strategy;
+  }
+
+  public executeStrategy(a: number, b: number): number {
+    return this.strategy.execute(a, b);
+  }
+}
+
+const addStrategy = new AddStrategy();
+const subtractStrategy = new SubtractStrategy();
+
+const calculator = new Calculator(addStrategy);
+calculator.executeStrategy(5, 3); // Output: 8
+
+calculator.setStrategy(subtractStrategy);
+calculator.executeStrategy(5, 3); // Output: 2
+```
