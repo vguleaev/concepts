@@ -1,0 +1,98 @@
+# Linked List
+
+### Linked List (Data Structure)
+
+**Linked List** is a linear data structure where each element is a separate object. Each element (we will call it a node) 
+of a list is comprising of two items - the data and a reference to the next node. The last node has a reference 
+to `null`. The entry point into a linked list is called the head of the list. 
+
+It should be noted that the head is not a separate node, but the reference to the first node. 
+If the list is empty then the head is a `null` reference.
+
+#### Types of Linked List
+
+1. **Singly Linked List**: Each node contains only one reference to the next node.
+2. **Doubly Linked List**: Each node contains two references, one to the next node and another to the previous node.
+3. **Circular Linked List**: The last node of the list contains a reference to the first node.
+
+#### Operations
+
+1. **Insert**: Insert a new node.
+2. **Delete**: Delete a node.
+3. **Search**: Search for a node.
+4. **Update**: Update the value of a node.
+
+#### Example
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def delete(self, data):
+        temp = self.head
+        if temp is not None:
+            if temp.data == data:
+                self.head = temp.next
+                temp = None
+                return
+        while temp is not None:
+            if temp.data == data:
+                break
+            prev = temp
+            temp = temp.next
+        if temp == None:
+            return
+        prev.next = temp.next
+        temp = None
+
+    def search(self, data):
+        temp = self.head
+        while temp is not None:
+            if temp.data == data:
+                return True
+            temp = temp.next
+        return False
+
+    def print(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.data, end=' ')
+            temp = temp.next
+        print()
+
+linked_list = LinkedList()
+
+linked_list.insert(1)
+linked_list.insert(2)
+linked_list.print_list()  # 2 1
+
+linked_list.delete(1)
+linked_list.print()  # 2
+```
+
+### Operations complexity (Time Complexity)
+
+- **Insert**: O(1)
+- **Search**: O(n)
+- **Update**: O(n)
+- **Delete**: O(n)
+
+> Delete/update element from Linked List is O(n) because we need to find the element first.
+But if we have a reference to the node, then deleting is O(1).
+
+### Linked List vs Array
+
+1. **Linked List**: Easy to insert and delete elements. Random access is not allowed.
+2. **Array**: Inserting and deleting elements is expensive. Random access is allowed.
+

@@ -1,0 +1,50 @@
+# Set
+
+### Set (Data Structure)
+
+**Set** is a collection of **unique** elements. It is an unordered, mutable, and indexed collection.
+
+### Operations
+
+1. **Add**: Insert an element.
+2. **Remove**: Remove an element.
+3. **Contains**: Check if an element exists in the set.
+4. **Union**: Combine two sets.
+5. **Intersection**: Get common elements between two sets.
+6. **Difference**: Get elements that are in one set but not in the other.
+
+### Example
+
+```python
+# Create a set
+s = {1, 2, 3}
+
+# Add an element
+s.add(4)
+
+# Remove an element
+s.remove(2)
+
+# Check if an element exists
+print(3 in s)  # True
+
+# Union
+s1 = {1, 2, 3}
+s2 = {3, 4, 5}
+print(s1.union(s2))  # {1, 2, 3, 4, 5}
+
+# Intersection
+print(s1.intersection(s2))  # {3}
+
+# Difference
+print(s1.difference(s2))  # {1, 2}
+```
+
+### Operations complexity (Time Complexity)
+
+- **Add**: O(1)
+- **Remove**: O(1)
+- **Contains**: O(1)
+- **Union**: O(n)
+- **Intersection**: O(n)
+- **Difference**: O(n)

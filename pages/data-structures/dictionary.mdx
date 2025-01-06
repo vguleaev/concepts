@@ -1,0 +1,56 @@
+# Dictionary 
+
+### Dictionary (Data Structure)
+
+**Dictionary** is a collection of key-value pairs. It is an unordered, mutable, and indexed collection.
+
+> In many programming languages, a dictionary is implemented as a **hash map**. 
+
+Dictionary is a data structure that stores **key-value pairs**. It allows for efficient insertion, deletion, 
+and lookup of values based on their keys.
+
+#### Operations
+
+1. **Add**: Insert a key-value pair.
+2. **Remove**: Remove a key-value pair.
+3. **Get**: Get the value associated with a key.
+4. **Exists**: Check if a key exists in the dictionary.
+
+#### Example
+
+```python
+# Create a dictionary
+person = {
+    'name': 'Alice',
+    'age': 30,
+    'city': 'New York'
+}
+
+# Access values using keys
+print(person['name'])  # Alice
+
+# Add a new key-value pair
+person['email'] = 'mail.com`
+
+# Remove a key-value pair
+del person['city']
+
+# Check if a key exists
+print('email' in person)  # True
+```
+
+### Operations complexity (Time Complexity)
+
+- **Add**: O(1)
+- **Remove**: O(1)
+- **Get**: O(1)
+- **Exists**: O(1)
+
+### Dictionary vs HashMap vs HashTable
+
+- **Dictionary**: A dictionary is a general term for a data structure that maps keys to values. 
+  **Map** and **Associative Array** are another terms for a dictionary.
+- **HashTable**: A data structure that implements an _associative array_ abstract data type, a structure that can map keys to values. 
+  It uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.
+- **HashMap**: A hashmap is a specific implementation of a HashTable. It is generally not synchronized and not thread-safe, making it 
+  faster for non-concurrent use cases
