@@ -721,7 +721,7 @@ const commands: Command[] = [deposit, withdraw];
 commands.forEach(command => command.execute());
 ```
 
-3. Iterator: Provides a way to traverse the elements of a collection sequentially without exposing its underlying representation.
+3. **Iterator**: Provides a way to traverse the elements of a collection sequentially without exposing its underlying representation.
 
 ```typescript copy
 interface Iterator<T> {
@@ -757,7 +757,7 @@ while (iterator.hasNext()) {
 }
 ```
 
-4. Strategy: Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+4. **Strategy**: Defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
 
 ```typescript copy
 interface Strategy {

@@ -1,0 +1,56 @@
+# Stack 
+
+### Stack (Data Structure)
+
+**Stack** is a linear data structure that follows the **Last In First Out (LIFO)** principle. The elements are inserted and removed from the same end.
+
+#### Operations
+
+1. **Push**: Insert an element at the top.
+2. **Pop**: Remove an element from the top.
+3. **Peek**: Get the top element.
+
+### Example
+
+```python
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push(self, item):
+        self.stack.append(item)
+
+    def pop(self):
+        if len(self.stack) == 0:
+            return None
+        return self.stack.pop()
+
+    def peek(self):
+        if len(self.stack) == 0:
+            return None
+        return self.stack[-1]
+
+s = Stack()
+s.push(1)
+s.push(2)
+s.push(3)
+
+print(s.pop()) # 3
+print(s.peek()) # 2
+```
+
+### Built-in Stack in Python
+
+Python provides a built-in `list` that can be used as a stack data structure. It provides a more efficient way to implement a stack.
+
+```python
+stack = []
+
+stack.append('a')
+stack.append('b')
+stack.append('c')
+
+stack.pop() # removes last element
+
+print(stack)  # ['a', 'b']
+```

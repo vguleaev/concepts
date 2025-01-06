@@ -1,0 +1,59 @@
+# Queue 
+
+### Queue (Data Structure)
+
+**Queue** is a linear data structure that follows the **First In First Out (FIFO)** principle. The elements are inserted at the rear end and removed from the front end.
+
+#### Operations
+
+1. **Enqueue**: Insert an element at the end.
+2. **Dequeue**: Remove an element from the beginning.
+3. **Peek**: Get the front element.
+
+### Example
+
+```python
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, item):
+        self.queue.append(item)
+
+    def dequeue(self):
+        if len(self.queue) == 0:
+            return None
+        return self.queue.pop(0)
+
+    def peek(self):
+        if len(self.queue) == 0:
+            return None
+        return self.queue[0]
+
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+
+print(q.dequeue()) # 1
+print(q.peek()) # 2
+```
+
+### Built-in Queue in Python
+
+Python provides a built-in `deque` that implements a queue data structure. It provides a more efficient way to implement a queue.
+
+```python
+from collections import deque
+
+deq_as_queue = deque()
+
+deq_as_queue.append('a')
+deq_as_queue.append('b')
+deq_as_queue.append('c')
+
+deq_as_queue.popleft() # removes first element
+
+print(deq_as_queue)  # deque(['b', 'c'])
+
+```
