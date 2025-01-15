@@ -1,0 +1,109 @@
+# Binary Tree 
+
+### Binary Tree (Data Structure)
+
+**Binary Tree** is a tree data structure in which each node has at most two children, 
+referred to as the **left child** and the **right child.**
+
+> Binary trees are used to implement binary search trees and binary heaps.
+
+**Height** of a binary tree is the length of the longest path from the root to the deepest node.
+
+### Properties
+
+- **Root**: The topmost node in the tree.
+- **Left Child**: The node that is the left child of a parent node.
+- **Right Child**: The node that is the right child of a parent node.
+- **Internal Node**: A node that has at least one child.
+- **Leaf**: A node that has no children.
+
+### Binary Search Tree (BST)
+
+The most common binary tree is called a **Binary Search Tree (BST)**. 
+
+In a BST, the left subtree of a node contains only nodes with keys less than the node's key 
+and the right subtree of a node contains only nodes with keys greater than the node's key.
+
+Binary Tree can be called a Binary Search Tree if it satisfies the following properties:
+
+1. The left subtree of a node contains only nodes with keys less than the node's key.
+2. The right subtree of a node contains only nodes with keys greater than the node's key.
+
+### Operations
+
+1. **Insert**: Insert a new node.
+2. **Delete**: Delete a node.
+3. **Search**: Search for a node.
+4. **Traverse**: Visit all nodes in a specific order.
+
+### Example
+
+```python
+class Node:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.val = key
+
+# Create a binary search tree
+root = Node(10)
+root.left = Node(5)
+root.right = Node(15)
+root.left.left = Node(3)
+root.left.right = Node(7)
+
+#          10
+#         /  \
+#        5    15
+#       / \
+#      3   7
+```
+
+### Traverse the binary tree
+
+Binary tree can be traversed in three ways:
+
+- **Preorder**: Root, Left, Right
+- **Inorder**: Left, Root, Right
+- **Postorder**: Left, Right, Root
+
+```python
+def inorder_traversal(node):
+    if node:
+        inorder_traversal(node.left)
+        print(node.val)
+        inorder_traversal(node.right)
+
+inorder_traversal(root)
+
+# Output: 3 5 7 10 15
+
+def preorder_traversal(node):
+    if node:
+        print(node.val)
+        preorder_traversal(node.left)
+        preorder_traversal(node.right)
+
+preorder_traversal(root)
+
+# Output: 10 5 3 7 15
+
+def postorder_traversal(node):
+    if node:
+        postorder_traversal(node.left)
+        postorder_traversal(node.right)
+        print(node.val)
+
+postorder_traversal(root)
+
+# Output: 3 7 5 15 10
+```
+
+### Time Complexity
+
+- **Insert**: O(h)
+- **Delete**: O(h)
+- **Search**: O(h)
+- **Traverse**: O(n)
+
+Where `h` is the height of the binary tree and `n` is the number of nodes in the tree.
