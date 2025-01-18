@@ -1,5 +1,9 @@
 {
   "stack": "Stack",
   "queue": "Queue",
+  "linked-list": "Linked List",
+  "set": "Set",
+  "dictionary": "Dictionary",
+  "binary-tree": "Binary Tree",
   "graph": "Graph"
 }

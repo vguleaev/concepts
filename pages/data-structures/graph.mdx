@@ -2,4 +2,87 @@
 
 ### Graph (Data Structure)
 
-TBD
+**Graph** is a non-linear data structure that consists of a finite set of vertices (nodes) and edges (links).
+
+> Graphs are used to represent networks, social networks, maps, and many more real-world applications.
+
+Graphs are used to model **relationships** between entities. A graph is a collection of nodes (vertices) and edges that connect pairs of nodes.
+
+### Types of Graphs
+
+1. **Undirected Graph**: A graph in which edges have no direction.
+2. **Directed Graph**: A graph in which edges have a direction.
+3. **Weighted Graph**: A graph in which edges have weights.
+4. **Acyclic Graph**: A graph that has no cycles.
+
+**Tree** is undirected graph with no cycles, where each node has exactly one parent.
+
+### Representing Graphs in Code
+
+Graphs can be represented using different data structures:
+- **Adjacency Matrix**: A 2D array of size `V x V` where `V` is the number of vertices.
+- **Adjacency List**: An array of linked lists where the size of the array is equal to the number of vertices.
+
+```python
+#         0
+#        / 
+#       1 --- 2
+#        \   /
+#          3
+
+# Adjacency Matrix representation
+graph = [[0, 1, 0, 0],
+         [1, 0, 1, 1],
+         [0, 1, 0, 1],
+         [0, 1, 1, 0]]
+
+# Adjacency List representation
+graph = {0: [1],
+         1: [0, 2, 3],
+         2: [1, 3],
+         3: [1, 2]}
+```
+
+### Operations
+
+1. **Add Vertex**: Add a new vertex to the graph.
+2. **Add Edge**: Add an edge between two vertices.
+3. **Remove Vertex**: Remove a vertex from the graph.
+4. **Remove Edge**: Remove an edge between two vertices.
+5. **Traverse**: Visit all vertices in a specific order.
+
+### Example
+
+```python
+from collections import defaultdict
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+    def print_graph(self):
+        for node in self.graph:
+            print(node, "->", " -> ".join(map(str, self.graph[node])))
+
+# Create a graph
+g = Graph()
+
+g.add_edge(0, 1)
+g.add_edge(1, 2)
+g.add_edge(2, 0)
+
+g.print_graph()
+```
+
+### Traversing a Graph
+
+There are two common ways to traverse a graph:
+
+- **Depth First Search (DFS)**: Explore as far as possible along each branch before backtracking.
+- **Breadth First Search (BFS)**: Explore all neighbor nodes at the present depth before to moving on to 
+the nodes at the next depth level.
+
+
