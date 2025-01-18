@@ -17,7 +17,7 @@ Graphs are used to model **relationships** between entities. A graph is a collec
 
 **Tree** is undirected graph with no cycles, where each node has exactly one parent.
 
-### Representing Graphs in Code
+### Representing Graph
 
 Graphs can be represented using different data structures:
 - **Adjacency Matrix**: A 2D array of size `V x V` where `V` is the number of vertices.
@@ -54,14 +54,15 @@ graph = {0: [1],
 ### Example
 
 ```python
-from collections import defaultdict
-
 class Graph:
     def __init__(self):
-        self.graph = defaultdict(list)
+        self.graph = {}
 
     def add_edge(self, u, v):
-        self.graph[u].append(v)
+        if u not in self.graph:
+            self.graph[u] = [v]
+        else:
+            self.graph[u].append(v)
 
     def print_graph(self):
         for node in self.graph:
@@ -81,8 +82,50 @@ g.print_graph()
 
 There are two common ways to traverse a graph:
 
-- **Depth First Search (DFS)**: Explore as far as possible along each branch before backtracking.
-- **Breadth First Search (BFS)**: Explore all neighbor nodes at the present depth before to moving on to 
-the nodes at the next depth level.
+- **Depth First Search (DFS)**
+- **Breadth First Search (BFS)**
 
 
+**Depth First Search (DFS)** is a recursive traversal strategy in which we start
+from a node and then traverse the graph as far as possible along each branch before backtracking.
+At each step, we visit an adjacent node that we have not visited before.
+
+**Breadth First Search (BFS)** is a traversal strategy that explores all neighbor nodes at the present depth level 
+before moving on to the nodes at the next depth level.
+We achieve this by maintaining a queue of the edges connected to the node that we are visiting. 
+We then pickup the next vertex to visit from the queue.
+
+```python
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u not in self.graph:
+            self.graph[u] = [v]
+        else:
+            self.graph[u].append(v)
+
+    def dfs(self, node, visited):
+        visited.add(node)
+        print(node, end=" ")
+
+        for neighbor in self.graph[node]:
+            if neighbor not in visited:
+                self.dfs(neighbor, visited)
+
+    def bfs(self, start):
+        visited = set()
+        queue = [start]
+        visited.add(start)
+
+        while queue:
+            node = queue.pop(0)
+            print(node, end=" ")
+
+            for neighbor in self.graph[node]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                    visited.add(neighbor)
+
+```
