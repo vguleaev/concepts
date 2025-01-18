@@ -85,7 +85,6 @@ There are two common ways to traverse a graph:
 - **Depth First Search (DFS)**
 - **Breadth First Search (BFS)**
 
-
 **Depth First Search (DFS)** is a recursive traversal strategy in which we start
 from a node and then traverse the graph as far as possible along each branch before backtracking.
 At each step, we visit an adjacent node that we have not visited before.
@@ -110,6 +109,9 @@ class Graph:
         visited.add(node)
         print(node, end=" ")
 
+        if node not in self.graph:
+            return
+
         for neighbor in self.graph[node]:
             if neighbor not in visited:
                 self.dfs(neighbor, visited)
@@ -123,9 +125,27 @@ class Graph:
             node = queue.pop(0)
             print(node, end=" ")
 
+            if node not in self.graph:
+                continue
+
             for neighbor in self.graph[node]:
                 if neighbor not in visited:
                     queue.append(neighbor)
                     visited.add(neighbor)
 
+
+# Create a graph
+g = Graph()
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 3)
+g.add_edge(2, 4)
+g.add_edge(3, 5)
+g.add_edge(4, 5)
+
+print("Breadth-First Search starting from node 0:")
+g.bfs(0)
+
+print("Depth-First Search starting from node 0:")
+g.dfs(0, set())
 ```
