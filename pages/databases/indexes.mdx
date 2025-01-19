@@ -1,0 +1,67 @@
+# Indexes
+
+### Database Indexes
+
+**Indexes** are a way to optimize the **performance** of a database by reducing the number of rows that need to be examined. 
+They are used to speed up the retrieval of data from a table by providing a fast way to look up data based on the values in specific columns.
+
+Indexes are a powerful tool for optimizing database performance, but they should be used carefully to avoid _unnecessary overhead_.
+
+### Types of Indexes
+
+1. **Primary Index**: An index that is created on the **primary key** of a table. It is unique and ensures that each row in the table can be uniquely identified.
+2. **Secondary Index**: An index that is created on columns other than the primary key. It helps to speed up queries that search for data based on these columns.
+3. **Composite Index**: An index that is created on multiple columns. It is useful when queries involve multiple columns in the `WHERE` clause.
+
+### How Indexes Work
+
+When a query is executed, the database engine uses the index to quickly locate the rows that match the search criteria.
+Without an index, the database engine would have to scan the entire table to find the rows that match the query, which can be slow for large tables.
+
+### Creating Indexes
+
+In most databases, you can create an index using the `CREATE INDEX` statement.
+
+```sql
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+```
+
+### Index cost
+
+While indexes can speed up queries, they also come with a cost.
+
+1. **Insert Performance**: Indexes can slow down the performance of insert operations because the database engine has to update the index whenever a new row is inserted.
+2. **Storage Overhead**: Indexes require additional storage space to store the index data structure.
+
+This also means index is a tradeoff between read and write operations. 
+You exchanging the time it takes to **read** data for the time it takes to **write** data plus some extra space in the database.
+
+### When to Use Indexes
+
+- Use indexes on columns that are frequently used in `WHERE` clauses.
+- Use indexes on columns that are used for joining tables.
+- Avoid creating indexes on columns with low cardinality (few distinct values).
+
+
+### Composite index order
+
+When creating a composite index, the order of the columns in the index matters.
+
+For example, consider the following composite index:
+
+```sql
+CREATE INDEX idx_name
+ON table_name (column1, column2);
+```
+
+This index will be useful for queries that filter on `column1` and `column2`, but not for queries that filter on `column2` alone.
+
+### Index internal implementation
+
+Indexes are implemented using data structures like **B-trees** or **Hash tables**.
+
+- **B-trees**: Used for most types of indexes. They are well-suited for range queries and provide efficient insertion and deletion.
+- **Hash tables**: Used for hash indexes. They are fast for exact match queries but not suitable for range queries.
+
+
