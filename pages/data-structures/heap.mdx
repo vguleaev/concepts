@@ -1,0 +1,108 @@
+# Heap
+
+### Heap (Data Structure)
+
+**Heap** is a binary tree-based data structure that satisfies the **heap property**. 
+It is an array object that can be viewed as a complete binary tree. 
+The heap property states that the key stored in each node is either 
+greater than or equal to (≥) or less than or equal to (≤) the keys in the node's children.
+
+Heaps are commonly used to implement priority queues. The most common types of heaps are **Min Heap** and **Max Heap**.
+
+### Operations
+
+- **Insert**: Insert an element into the heap.
+- **Delete**: Delete an element from the heap.
+- **Extract**: Extract the root element from the heap.
+- **Heapify**: Convert an array into a heap.
+- **Heap Sort**: Sort an array using a heap.
+
+### Types of Heaps
+
+- **Min Heap**: The key at the root must be minimum among all keys present in the heap.
+- **Max Heap**: The key at the root must be maximum among all keys present in the heap.
+
+```python
+# Example of Min Heap
+       10
+     /    \
+    20     100
+   /  \    /  \
+  30  50  200 500
+
+arr = [10, 20, 100, 30, 50, 200, 500]
+
+# Example of Max Heap
+       500
+     /    \
+   200     100
+   /  \    /  \
+  30  10  20  50
+
+arr = [500, 200, 100, 30, 10, 20, 50]
+```
+
+### Example in Python
+
+```python
+import heapq
+
+# Create a list
+heap = [10, 20, 30, 40, 50]
+
+# Convert the list into a min heap
+heapq.heapify(heap) # Output: [10, 20, 30, 40, 50]
+
+# Insert an element
+heapq.heappush(heap, 15) # Output: [10, 15, 30, 40, 50, 20]
+
+# Extract the root element
+print(heapq.heappop(heap)) # Output: 10
+```
+
+### Priority Queue
+
+Heaps are used to implement priority queues. A **priority queue** is a data structure that stores elements with associated priorities. 
+
+The priority queue supports two operations:
+
+- **Insert**: Insert an element with a given priority.
+- **Extract**: Extract the element with the highest priority.
+
+### Example of Priority Queue
+
+```python
+import heapq
+
+class PriorityQueue:
+    def __init__(self):
+        self.heap = []
+    
+    def insert(self, priority, value):
+        heapq.heappush(self.heap, (priority, value))
+    
+    def extract(self):
+        return heapq.heappop(self.heap)[1]
+
+# Create a priority queue
+pq = PriorityQueue()
+
+# Insert elements
+pq.insert(10, 'A')
+
+# Extract elements
+print(pq.extract()) # Output: A
+
+pq.insert(5, 'B')
+pq.insert(15, 'C')
+
+print(pq.extract()) # Output: B
+```
+
+### Complexity
+
+- **Insert**: O(log n)
+- **Delete**: O(log n)
+- **Extract**: O(log n)
+- **Heapify**: O(n)
+- **Heap Sort**: O(n log n)
