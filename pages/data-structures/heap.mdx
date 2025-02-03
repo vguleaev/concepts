@@ -19,11 +19,12 @@ Heaps are commonly used to implement priority queues. The most common types of h
 
 ### Types of Heaps
 
-- **Min Heap**: The key at the root must be minimum among all keys present in the heap.
-- **Max Heap**: The key at the root must be maximum among all keys present in the heap.
+- **Min Heap**: The key at the root must be **minimum** value among all keys present in the heap.
+- **Max Heap**: The key at the root must be **maximum** value among all keys present in the heap.
 
 ```python
 # Example of Min Heap
+# Every parent node is less than its children
        10
      /    \
     20     100
@@ -33,6 +34,7 @@ Heaps are commonly used to implement priority queues. The most common types of h
 arr = [10, 20, 100, 30, 50, 200, 500]
 
 # Example of Max Heap
+# Every parent node is greater than its children
        500
      /    \
    200     100
