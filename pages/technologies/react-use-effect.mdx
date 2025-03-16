@@ -1,0 +1,74 @@
+# React - useEffect Hook
+
+### What is useEffect?
+
+The `useEffect` hook is a built-in React hook that allows you to perform side effects in function components. 
+
+It is similar to lifecycle methods in class components, such as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+
+Examples of side effects include data fetching, subscriptions, timers, and DOM manipulations.
+
+### Basic Syntax
+
+```jsx
+import React, { useEffect } from 'react';
+
+function MyComponent() {
+  useEffect(() => {
+    // Side effect code here
+    return () => {
+      // Cleanup code here
+    };
+  }, [dependencies]);
+  
+  return <div>My Component</div>;
+}
+```
+
+- The first argument is a function that contains the side effect code.
+- The second argument is an array of dependencies. 
+- The function can return a cleanup function.
+
+
+### When the Effect Runs
+
+- After the **initial render**
+- After every **re-render** _(when state or props change)_
+
+### React Strict Mode
+
+When using strict mode, the `useEffect` hook will **run twice** in development mode to help identify side effects that may cause bugs.
+
+This is because component is rendered twice in strict mode to detect side effects that depend on the order of execution.
+
+_In React 19 strict mode will be enforced by default._
+
+### Dependency Array
+
+The dependency array is the second argument to useEffect and it controls when the effect function runs:
+
+| Dependency Array           | When Effect Runs                                      |
+|----------------------------|-------------------------------------------------------|
+| Not provided               | After every render                                    |
+| Empty array `[]`           | Only after the initial render (component mount)       |
+| With dependencies `[a, b]` | After initial render and when any dependency changes  |
+
+
+Notice that not providing a dependency array, which means this effect will run after **every render**.
+
+**Object and Array Dependencies:** Be careful with objects and arrays as dependencies, as they're compared by reference.
+An effect will run only when the reference changes, not when the contents of the object or array change.
+
+
+### Cleanup Function
+
+The cleanup function is used to perform any cleanup or teardown tasks when the component is unmounted or re-rendered.
+
+This is useful for unsubscribing from subscriptions, clearing timers, or removing event listeners.
+
+When Does Cleanup Run?
+
+- Before the **component is removed** (unmounting)
+- Before the **effect runs again** (if the effect runs more than once)
+
+Note that cleanup runs every time before the effect runs again.
