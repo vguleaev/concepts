@@ -1,0 +1,83 @@
+# React - useRef Hook
+
+### What is useRef?
+
+The `useRef` hook is a built-in React hook that allows you to create a mutable reference that **persists** for the lifetime of the component.
+
+It is commonly used to access DOM elements directly or to store mutable values that **do not trigger re-renders** when changed.
+
+Examples of use cases include focusing an input element, storing a timer ID, or keeping track of previous values.
+
+### Basic Syntax
+
+```jsx
+import React, { useRef } from 'react';
+
+function MyComponent() {
+  const myRef = useRef(null);
+
+  return <div ref={myRef}>My Component</div>;
+}
+```
+- The `useRef` hook returns a mutable object with a `current` property.
+- The `current` property can be initialized with a value, and it can be updated **without causing a re-render** of the component.
+
+### Accessing DOM Elements
+
+You can use `useRef` to access DOM elements directly:
+
+```jsx
+import React, { useRef, useEffect } from 'react';
+
+function MyComponent() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // Focus the input element on mount
+    inputRef.current.focus();
+  }, []);
+
+  return <input ref={inputRef} type="text" />;
+}
+```
+
+### Storing Values
+
+You can also use `useRef` to store values that you want to persist across re-renders without triggering a re-render when the value changes:
+
+```jsx
+import React, { useRef, useState } from 'react';
+
+function DebouncedInput() {
+  const [value, setValue] = useState('');
+  const timeoutRef = useRef(null);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      console.log('Debounced:', e.target.value);
+    }, 500);
+  };
+
+  return <input type="text" value={value} onChange={handleChange} />;
+}
+```
+
+### useRef vs useCallback
+
+`useRef` and `useCallback` are both hooks that can be used to optimize performance in React, but they serve different purposes:
+
+- `useRef` is used to create a mutable reference that persists across re-renders, allowing you to store values or access DOM elements without triggering re-renders.
+- `useCallback` is used to memoize a function so that it does not get recreated on every render, which can help prevent unnecessary re-renders of child components that depend on that function.
+
+
+### When to Use useRef
+- When you need to access a DOM element directly.
+- When you want to store a mutable value that does not require re-rendering the component.
+- When you need to keep track of previous values without triggering re-renders.
+
