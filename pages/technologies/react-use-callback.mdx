@@ -1,0 +1,47 @@
+# React - useCallback
+
+### What is useCallback?
+
+The `useCallback` hook is a built-in React hook that returns a **memoized version of a callback function**. 
+
+It is used to optimize performance by preventing unnecessary re-creations of functions during re-renders.
+
+It is particularly useful when passing callbacks to child components that rely on reference equality to **prevent unnecessary re-renders**.
+
+### Basic Syntax
+
+```jsx
+import React, { useCallback } from 'react';
+
+function MyComponent({ onClick }) {
+
+  const handleClick = useCallback(() => {
+    // Callback code here
+  }, [/* dependencies */]);
+
+  return <button onClick={handleClick}>Click Me</button>;
+}
+```
+- The first argument is the callback function that you want to memoize.
+- The second argument is an array of dependencies that determine when the callback should be re-created.
+
+### When the Callback is Re-Created
+
+- The callback function is re-created only when one of the dependencies changes.
+- If the dependencies array is empty, the callback will be created only once during the initial render.
+
+### React Strict Mode
+
+In React Strict Mode, the `useCallback` hook will run twice in development mode to help identify side effects that may cause bugs. 
+
+This is similar to how `useEffect` behaves in strict mode.
+
+### useCallback vs useMemo
+
+The `useCallback` hook is often confused with the `useMemo` hook, but they serve different purposes:
+
+- `useCallback` is used to **memoize a function**, preventing it from being re-created unless its dependencies change.
+- `useMemo` is used to **memoize a value**, preventing it from being recalculated unless its dependencies change.
+
+> `useMemo` is useful for expensive calculations, while `useCallback` is useful for functions that are passed as props to child components.
+

@@ -1,4 +1,5 @@
 {
   "react-use-effect": "React - useEffect hook",
-  "react-use-ref": "React - useRef hook"
+  "react-use-ref": "React - useRef hook",
+  "react-use-callback": "React - useCallback hook"
 }
